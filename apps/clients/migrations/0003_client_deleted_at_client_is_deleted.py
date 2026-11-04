@@ -5,7 +5,9 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('clients', '0002_alter_client_notes'),
+        ('clients', '0002_initial'),
     ]
 
     operations = [
     ]
+
