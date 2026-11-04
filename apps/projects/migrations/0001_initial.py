@@ -10,7 +10,7 @@ class Migration(migrations.Migration):
 
     dependencies = [
         ('clients', '0002_alter_client_notes'),
-        ('workspaces', '0002_alter_workspace_created_at_and_more'),
+        ('workspaces', '0002_remove_workspace_unique_workspace_name_per_owner_and_more'),
     ]
 
     operations = [

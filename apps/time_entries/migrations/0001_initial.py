@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
     dependencies = [
         ('projects', '0001_initial'),
         ('tags', '0001_initial'),
-        ('workspaces', '0002_alter_workspace_created_at_and_more'),
+        ('workspaces', '0002_remove_workspace_unique_workspace_name_per_owner_and_more'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
