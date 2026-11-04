@@ -1,5 +1,8 @@
 Django>=5.2,<5.3
-Pillow>=11.2,<11.3
+Pillow
 django-crispy-forms>=2.4,<2.5
 crispy-bootstrap5>=2025.6,<2026.0
 django-unfold
+djangorestframework
+djangorestframework-simplejwt
+django-cors-headers
