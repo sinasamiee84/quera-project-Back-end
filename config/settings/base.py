@@ -14,20 +14,21 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    'crispy_forms',
-    'crispy_bootstrap5',
-    'apps.users',
-    'apps.workspaces',
-    'apps.clients',
-    'apps.projects',
-    'apps.tags',
-    'apps.time_entries',
-    'apps.contact_notes',
-    'rest_framework',
-    'rest_framework_simplejwt',
-    'rest_framework_simplejwt.token_blacklist',
-    'corsheaders',
+    "crispy_forms",           # تغییر به دابل کوتیشن
+    "crispy_bootstrap5",      # تغییر به دابل کوتیشن
+    "apps.users",             # تغییر به دابل کوتیشن
+    "apps.workspaces",        # تغییر به دابل کوتیشن
+    "apps.clients",           # تغییر به دابل کوتیشن
+    "apps.projects",          # تغییر به دابل کوتیشن
+    "apps.tags",              # تغییر به دابل کوتیشن
+    "apps.time_entries",      # تغییر به دابل کوتیشن
+    "apps.contact_notes",     # تغییر به دابل کوتیشن
+    "rest_framework",
+    "rest_framework_simplejwt",
+    "rest_framework_simplejwt.token_blacklist",
+    "corsheaders",
 ]
+
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
 CRISPY_TEMPLATE_PACK = 'bootstrap5'
 AUTH_USER_MODEL = 'users.User'
@@ -50,6 +51,16 @@ REST_FRAMEWORK = {
     ),
     "DEFAULT_PAGINATION_CLASS": "core.pagination.DefaultPagination",
     "PAGE_SIZE": 10,
+    "DEFAULT_THROTTLE_CLASSES": (
+        "rest_framework.throttling.AnonRateThrottle",
+        "rest_framework.throttling.UserRateThrottle",
+    ),
+    "DEFAULT_THROTTLE_RATES": {
+        'anon':'60/minute',
+        'user':'240/minute',
+        'auth':'10/minute',
+    }
+
 }
 
 SIMPLE_JWT = {

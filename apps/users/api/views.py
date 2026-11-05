@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.views import TokenRefreshView
-
+from .throttles import AuthRateThrottle
 from apps.users.api.serializers import (
     LoginSerializer,
     PasswordChangeSerializer,
@@ -17,6 +17,7 @@ from apps.users.models import User
 
 
 class RegisterAPIView(generics.CreateAPIView):
+    throttle_classes = [AuthRateThrottle]
     serializer_class = RegisterSerializer
     permission_classes = [AllowAny]
 
@@ -39,6 +40,7 @@ class RegisterAPIView(generics.CreateAPIView):
 
 
 class LoginAPIView(APIView):
+    throttle_classes = [AuthRateThrottle]
     permission_classes = [AllowAny]
 
     def post(self, request):
