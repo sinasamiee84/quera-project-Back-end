@@ -119,3 +119,9 @@ UNFOLD = {
     "SITE_HEADER": "Quera Clock",
     "SITE_SUBHEADER": "Admin Panel",
 }
+CELERY_BROKER_URL = "redis://localhost:6379/0"
+CELERY_RESULT_BACKEND = "redis://localhost:6379/1"
+CELERY_TASK_ALWAYS_EAGER = False
+CELERY_TASK_EAGER_PROPAGATES = True
+
+

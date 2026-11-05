@@ -13,11 +13,14 @@ from apps.users.models import User
 @override_settings(PASSWORD_HASHERS=["django.contrib.auth.hashers.MD5PasswordHasher"])
 class ThrottlingAPIChecks(APITestCase):
     def setUp(self):
+        # خالی کردن کش تراتل قبل از هر تست
         cache.clear()
 
         self.email = "throttle_test@example.com"
-        self.mobile = "09109112033"
-        self.password = "strongpassword123"
+        self.mobile = "09121234567"
+        self.password = "TestPass1234!"
+
+        # ساخت کاربر تستی با شماره موبایل و پسورد معتبر
         self.user = User.objects.create_user(
             email=self.email,
             mobile=self.mobile,
@@ -46,8 +49,11 @@ class ThrottlingAPIChecks(APITestCase):
         self.assertEqual(rates["auth"], "10/minute")
 
     def test_login_is_throttled_after_limit(self):
-        """ارسال ۱۱ درخواست متوالی به لاگین و اطمینان از دریافت خطای 429 Too Many Requests در درخواست یازدهم"""
+        """ارسال ۱۰ درخواست مجاز اول و بررسی دریافت پاسخ 429 در درخواست یازدهم"""
+        # دقت کن در فاز اول Quera Clock ورود بر اساس موبایل است یا ایمیل:
+        # برای اطمینان هر دو فیلد فرستاده می‌شود
         login_data = {
+            "mobile": self.mobile,
             "email": self.email,
             "password": self.password,
         }
@@ -58,13 +64,13 @@ class ThrottlingAPIChecks(APITestCase):
             self.assertNotEqual(
                 response.status_code,
                 status.HTTP_429_TOO_MANY_REQUESTS,
-                "درخواست‌های اول تا دهم نباید تراتل شوند.",
+                "درخواست‌های اول تا دهم نباید ۴۲۹ دریافت کنند.",
             )
 
-        # درخواست یازدهم باید با کد وضعیت 429 مسدود شود
+        # درخواست یازدهم باید با کد 429 مسدود شود
         blocked_response = self.client.post(self.login_url, login_data, format="json")
         self.assertEqual(
             blocked_response.status_code,
             status.HTTP_429_TOO_MANY_REQUESTS,
-            "درخواست یازدهم در همان دقیقه باید با خطای ۴۲۹ محدود شود.",
+            "درخواست یازدهم در یک دقیقه باید وضعیت ۴۲۹ برگرداند.",
         )
