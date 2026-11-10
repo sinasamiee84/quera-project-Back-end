@@ -9,6 +9,9 @@ urlpatterns = [
     path('auth/', include('apps.users.urls',namespace='users')),
     path('api/users/', include('apps.users.api.urls',namespace='api-users')),
     path("api/notifications/", include("apps.notifications.api.urls")),
+    path("api/workspaces/", include("apps.workspaces.api.urls")),
+    path("api/workspace-memberships/", include("apps.workspaces.api.membership_urls")),
+    path("api/memberships/", include("apps.workspaces.api.membership_urls")),
 
 ]
 if settings.DEBUG:
